@@ -30,6 +30,7 @@ for c = 1:16
     plot(times,expression((clusters == c),:)');
     axis tight
 end
+drawnow;
 suptitle('Hierarchical Clustering of Profiles');
 
 %% K Means
@@ -44,10 +45,20 @@ for c = 1:16
     plot(times,expression((cidx == c),:)');
     axis tight
 end
+drawnow;
 suptitle('K-Means Clustering of Profiles');
 
-% Display clustergram
-clustergram(expression,'RowLabels',genes,...
+% Display clustergram, one for each cluster
+for c = 1:16
+    cgram = clustergram(expression((cidx == c),:),'RowLabels',genes((cidx == c)),...
     'ColumnLabels',times, 'Cluster', 'column',...
-    'Standardize', 'row')
+    'Standardize', 'row');
+
+    titleLabel = 'Cluster dendrogram and heatmap for cluster %d';
+    titleString = sprintf(titleLabel,c);
+    addTitle(cgram,titleString)
+    drawnow;
+    
+end
+
 
