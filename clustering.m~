@@ -19,16 +19,26 @@ times = [0,15, 30, 45, 60, 120];
 
 numClusters = 12;
 
-% Create correlation and cluster tree
-corrExpression = corr(expression', 'rows', 'pairwise');
-corrDist = 1 - corrExpression;
+%% Hierarchical clustering
+% Hierarchical cluster 
+corrDist = pdist(expression, 'correlation');
 clusterTree = linkage(corrDist, 'complete');
+clusters = cluster(clusterTree, 'maxclust', numClusters);
 
-% Show Dendrogram
 figure(1)
 dendrogram(clusterTree,0)
 title('Dendrogram for Hierarchical Clustering');
 drawnow;
+
+% Plot time series of clusters
+figure(2)
+for c = 1:numClusters
+    subplot(numClusters/4,4,c);
+    plot(times,expression((clusters == c),:)');
+    axis tight
+end
+drawnow;
+suptitle('Hierarchical Clustering of Profiles');
 
 %% K Means
 % K-means clustering with 16 clusters
@@ -36,15 +46,6 @@ drawnow;
     'dist','corr',...
     'rep',5,...
     'disp','final');
-
-% Correlation Heat Map
-[tmp,ind] = sort(cidx);
-
-corrSquare = corrExpression;
-corrSorted = corrSquare(ind, ind);
-heatMap = HeatMap(corrSorted);
-title("Correlation Heat Map");
-
 figure(3)
 for c = 1:numClusters
     subplot(numClusters/4,4,c);
@@ -53,6 +54,12 @@ for c = 1:numClusters
 end
 drawnow;
 suptitle('K-Means Clustering of Profiles');
+
+[tmp,ind] = sort(cidx);
+
+corrSquare = squareform(corrDist);
+corrSorted = corrSquare(ind, ind);
+heatMap = 
 
 %% Clustergrams
 % Display clustergram, one for each cluster
