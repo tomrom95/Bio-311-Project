@@ -22,7 +22,10 @@ connectionMatrix(allZeroIndicies,:) = [];
 genes(allZeroIndicies) = [];
 
 padding = fliplr(size(connectionMatrix));
-symmetric = padarray(connectionMatrix, padding, 'post')';
+padX = padding(1);
+padY = padding(2);
+symmetric = padarray(connectionMatrix, [padX 0], 'pre');
+symmetric = padarray(symmetric, [0 padY], 'post');
 
-bg = biograph(symmetric, [tfs genes']);
-view(bg);
+tfGraph = biograph(symmetric', [ tfs genes' ], 'LayoutType', 'radial');
+view(tfGraph);
