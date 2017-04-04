@@ -22,6 +22,7 @@ connectionMatrix(allZeroIndicies,:) = [];
 genes(allZeroIndicies) = [];
 
 padding = fliplr(size(connectionMatrix));
-symmetric = padarray(connectionMatrix, padding, 'post');
+symmetric = padarray(connectionMatrix, padding, 'post')';
 
-biograph(symmetric, [tfs genes']);
+bg = biograph(symmetric, [tfs genes']);
+view(bg);
