@@ -13,19 +13,16 @@ nanIndices = any(isnan(tfMatrix),2);
 tfMatrix(nanIndices,:) = [];
 genes(nanIndices) = [];
 
+%% Activators
 thresh = 0.5;
 
 connectionMatrix = tfMatrix > thresh;
 
-allZeroIndicies = all(connectionMatrix == 0, 2);
-connectionMatrix(allZeroIndicies,:) = [];
-genes(allZeroIndicies) = [];
+plotNetwork(connectionMatrix, tfs, genes);
 
-padding = fliplr(size(connectionMatrix));
-padX = padding(1);
-padY = padding(2);
-symmetric = padarray(connectionMatrix, [padX 0], 'pre');
-symmetric = padarray(symmetric, [0 padY], 'post');
+%% Repressors
+thresh = -1.2;
 
-tfGraph = biograph(symmetric', [ tfs genes' ], 'LayoutType', 'radial');
-view(tfGraph);
+connectionMatrix = tfMatrix < thresh;
+
+plotNetwork(connectionMatrix, tfs, genes);
