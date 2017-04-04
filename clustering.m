@@ -17,24 +17,26 @@ expression = [colMean, expression(:,3:end)];
 
 times = [0,15, 30, 45, 60, 120];
 
-numClusters = 12;
+numClusters = 20;
+
+%% Correlation calculations
 
 % Create correlation and cluster tree
 corrExpression = corr(expression', 'rows', 'pairwise');
 corrDist = 1 - corrExpression;
-clusterTree = linkage(corrDist, 'complete');
-
-% Show Dendrogram
-figure(1)
-dendrogram(clusterTree,0)
-title('Dendrogram for Hierarchical Clustering');
-drawnow;
+% clusterTree = linkage(corrDist, 'complete');
+% 
+% % Show Dendrogram
+% figure(1)
+% dendrogram(clusterTree,0)
+% title('Dendrogram for Hierarchical Clustering');
+% drawnow;
 
 %% K Means
 % K-means clustering with 16 clusters
 [cidx, ctrs] = kmeans(expression, numClusters,...
     'dist','corr',...
-    'rep',5,...
+    'rep',10,...
     'disp','final');
 
 % Correlation Heat Map
@@ -42,30 +44,31 @@ drawnow;
 
 corrSquare = corrExpression;
 corrSorted = corrSquare(ind, ind);
-heatMap = HeatMap(corrSorted);
-title("Correlation Heat Map");
+heatMap = HeatMap(fliplr(corrSorted));
+addTitle(heatMap, "Correlation Heat Map");
 
 figure(3)
 for c = 1:numClusters
     subplot(numClusters/4,4,c);
     plot(times,expression((cidx == c),:)');
+    title(c);
     axis tight
 end
 drawnow;
-suptitle('K-Means Clustering of Profiles');
+suptitle('K-Means Clustering - Expression over time');
 
-%% Clustergrams
-% Display clustergram, one for each cluster
-for c = 1:numClusters
-    cgram = clustergram(expression((cidx == c),:),'RowLabels',genes((cidx == c)),...
-    'ColumnLabels',times, 'Cluster', 'column',...
-    'Standardize', 'row');
-
-    titleLabel = 'Cluster dendrogram and heatmap for cluster %d';
-    titleString = sprintf(titleLabel,c);
-    addTitle(cgram,titleString)
-    drawnow;
-    
-end
+% %% Clustergrams
+% % Display clustergram, one for each cluster
+% for c = 1:numClusters
+%     cgram = clustergram(expression((cidx == c),:),'RowLabels',genes((cidx == c)),...
+%     'ColumnLabels',times, 'Cluster', 'column',...
+%     'Standardize', 'row');
+% 
+%     titleLabel = 'Cluster dendrogram and heatmap for cluster %d';
+%     titleString = sprintf(titleLabel,c);
+%     addTitle(cgram,titleString)
+%     drawnow;
+%     
+% end
 
 
