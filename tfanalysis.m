@@ -14,14 +14,14 @@ tfMatrix(nanIndices,:) = [];
 genes(nanIndices) = [];
 
 %% Activators
-thresh = 0.5;
+thresh = 0.6;
 
 connectionMatrix = tfMatrix > thresh;
 
 plotNetwork(connectionMatrix, tfs, genes);
 
 %% Repressors
-thresh = -1.2;
+thresh = -1.3;
 
 connectionMatrix = tfMatrix < thresh;
 
