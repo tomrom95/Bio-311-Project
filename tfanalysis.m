@@ -49,6 +49,7 @@ connectionMatrix = tfMatrix < thresh;
 
 %plotNetwork(repressorMatrix, tfs, repressorGenes);
 
+%%
 %count nodes and edges
 connectionMatrixT = connectionMatrix';
 repressorsPerGene = sum(connectionMatrixT);
