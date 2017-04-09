@@ -1,7 +1,7 @@
 close all
 tfTable = readtable('zanton-2004-TFbinding.csv');
 
-genes = table2array(tfTable(:,2));
+genes = table2array(tfTable(:,1));
 tfs = {'TBP', 'TAF1', 'Bdf1', 'Spt3', 'Mot1'};
 
 data = tfTable(:,4:end);
@@ -18,11 +18,35 @@ thresh = 0.6;
 
 connectionMatrix = tfMatrix > thresh;
 
-plotNetwork(connectionMatrix, tfs, genes);
+[activatorMatrix, activatorGenes] = reduceConnectionMatrix(connectionMatrix, genes);
+
+%plotNetwork(connectionMatrix, tfs, activatorGenes);
 
 %% Repressors
 thresh = -1.3;
 
 connectionMatrix = tfMatrix < thresh;
 
-plotNetwork(connectionMatrix, tfs, genes);
+[repressorMatrix, repressorGenes] = reduceConnectionMatrix(connectionMatrix, genes);
+
+%plotNetwork(repressorMatrix, tfs, repressorGenes);
+
+%% Display Linked Genes
+
+disp("Linked Genes");
+disp("As activators");
+for i = 1:length(tfs)
+    disp(tfs(i));
+    linkedGeneIndices = activatorMatrix(:,i) == 1;
+    linkedGenes = activatorGenes(linkedGeneIndices);
+    disp(linkedGenes);
+end
+
+disp("As repressors");
+
+for i = 1:length(tfs)
+    disp(tfs(i));
+    linkedGeneIndices = repressorMatrix(:,i) == 1;
+    linkedGenes = repressorGenes(linkedGeneIndices);
+    disp(linkedGenes);
+end

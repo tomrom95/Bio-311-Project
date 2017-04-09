@@ -2,9 +2,6 @@ function plotNetwork( connectionMatrix, tfs, genes )
 % connectionMatrix: connections with tfs as rows, genes as columns
 % tfs: row of tf names
 % genes: column of gene names
-allZeroIndicies = all(connectionMatrix == 0, 2);
-connectionMatrix(allZeroIndicies,:) = [];
-genes(allZeroIndicies) = [];
 
 padding = fliplr(size(connectionMatrix));
 padX = padding(1);
