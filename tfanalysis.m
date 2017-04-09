@@ -29,6 +29,17 @@ connectionMatrix = tfMatrix > thresh;
 
 %plotNetwork(connectionMatrix, tfs, activatorGenes);
 
+%count nodes and edges
+connectionMatrixT = connectionMatrix';
+activatorsPerGene = sum(connectionMatrixT);
+numGenesActivated = 0;
+for k = 1:length(activatorsPerGene)
+    if activatorsPerGene(k) ~= 0
+numGenesActivated = numGenesActivated + 1;
+    end
+end
+numEdgesActivation = sum(sum(connectionMatrix));
+
 %% Repressors
 thresh = -1.3;
 
@@ -37,6 +48,17 @@ connectionMatrix = tfMatrix < thresh;
 [repressorMatrix, repressorGenes] = reduceConnectionMatrix(connectionMatrix, genes);
 
 %plotNetwork(repressorMatrix, tfs, repressorGenes);
+
+%count nodes and edges
+connectionMatrixT = connectionMatrix';
+repressorsPerGene = sum(connectionMatrixT);
+numGenesRepressed = 0;
+for k = 1:length(repressorsPerGene)
+    if repressorsPerGene(k) ~= 0
+numGenesRepressed = numGenesRepressed + 1;
+    end
+end
+numEdgesRepression = sum(sum(connectionMatrix));
 
 %% Display Linked Genes
 
