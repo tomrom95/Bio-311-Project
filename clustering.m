@@ -57,6 +57,28 @@ end
 drawnow;
 suptitle('K-Means Clustering - Expression over time');
 
+% get lists of cluster
+cluster1List = getClusterList(cidx, genes, 1);
+cluster2List = getClusterList(cidx, genes, 2);
+cluster3List = getClusterList(cidx, genes, 3);
+cluster4List = getClusterList(cidx, genes, 4);
+cluster5List = getClusterList(cidx, genes, 5);
+cluster6List = getClusterList(cidx, genes, 6);
+cluster7List = getClusterList(cidx, genes, 7);
+cluster8List = getClusterList(cidx, genes, 8);
+cluster9List = getClusterList(cidx, genes, 9);
+cluster10List = getClusterList(cidx, genes, 10);
+cluster11List = getClusterList(cidx, genes, 11);
+cluster12List = getClusterList(cidx, genes, 12);
+cluster13List = getClusterList(cidx, genes, 13);
+cluster14List = getClusterList(cidx, genes, 14);
+cluster15List = getClusterList(cidx, genes, 15);
+cluster16List = getClusterList(cidx, genes, 16);
+cluster17List = getClusterList(cidx, genes, 17);
+cluster18List = getClusterList(cidx, genes, 18);
+cluster19List = getClusterList(cidx, genes, 19);
+cluster20List = getClusterList(cidx, genes, 20);
+
 % %% Clustergrams
 % % Display clustergram, one for each cluster
 % for c = 1:numClusters
@@ -70,4 +92,6 @@ suptitle('K-Means Clustering - Expression over time');
 %     drawnow;
 %     
 % end
+
+
 
