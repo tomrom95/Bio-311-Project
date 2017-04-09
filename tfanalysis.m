@@ -72,11 +72,17 @@ for i = 1:length(tfs)
     disp(linkedGenes);
 end
 
-disp("As repressors");
+% Code to display genes without quotes
+% for i = 1:length(linkedGenes)
+%     text = sprintf('%s\n',linkedGenes{i});
+%     disp(text)
+% end
 
+disp("As repressors");
+ 
 for i = 1:length(tfs)
-    disp(tfs(i));
-    linkedGeneIndices = repressorMatrix(:,i) == 1;
-    linkedGenes = repressorGenes(linkedGeneIndices);
-    disp(linkedGenes);
+     disp(tfs(i));
+     linkedGeneIndices = repressorMatrix(:,i) == 1;
+     linkedGenes = repressorGenes(linkedGeneIndices);
+     disp(linkedGenes);
 end
