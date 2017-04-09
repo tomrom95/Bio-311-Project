@@ -2,6 +2,13 @@ close all
 tfTable = readtable('zanton-2004-TFbinding.csv');
 
 genes = table2array(tfTable(:,1));
+geneOtherNames = table2array(tfTable(:,2));
+for i = 1:length(genes)
+   if strcmp(genes(i), '')
+      genes(i) = geneOtherNames(i); 
+   end
+end
+
 tfs = {'TBP', 'TAF1', 'Bdf1', 'Spt3', 'Mot1'};
 
 data = tfTable(:,4:end);
