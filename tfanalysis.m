@@ -40,6 +40,16 @@ numGenesActivated = numGenesActivated + 1;
 end
 numEdgesActivation = sum(sum(connectionMatrix));
 
+% Pull outdegrees for each TF and plot histograms for indegrees of each gene
+outDegreesActivation = sum(connectionMatrix);
+activatorsPerGeneNonzero = activatorsPerGene(activatorsPerGene ~= 0);
+figure(1);
+histogram(activatorsPerGeneNonzero);
+title('Indegrees per gene for activation (genes with no edges excluded)')
+xlabel('Indegree (TFs)')
+ylabel('Frequency (genes)')
+% ***appropriate print command
+
 %% Repressors
 thresh = -1.3;
 
@@ -60,6 +70,18 @@ numGenesRepressed = numGenesRepressed + 1;
     end
 end
 numEdgesRepression = sum(sum(connectionMatrix));
+
+% Pull outdegrees for each TF and plot histograms for indegrees of each gene
+
+outDegreesRepression = sum(connectionMatrix);2
+repressorsPerGeneNonzero = repressorsPerGene(repressorsPerGene ~= 0);
+figure(2);
+histogram(repressorsPerGeneNonzero);
+title('Indegrees per gene for repression (genes with no edges excluded)')
+xlabel('Indegree (TFs)')
+ylabel('Frequency (genes)')
+% ***appropriate print command
+
 
 %% Display Linked Genes
 
